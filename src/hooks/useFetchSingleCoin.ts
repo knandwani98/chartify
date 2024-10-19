@@ -1,9 +1,8 @@
-import { HistoricalChart } from "@/lib/apis";
-import { CHAR_DATA } from "@/lib/constants";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
-  const { id, days } = props;
+  const { id, days = 365 } = props;
 
   const [data, setData] = useState<
     {
@@ -11,7 +10,6 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
       timestamp: number;
     }[]
   >([]);
-  const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //
@@ -21,24 +19,27 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
     if (!id) throw new Error("Invalid Coin Id");
 
     try {
-      // const response = await fetch(HistoricalChart(id, days));
-      // if (!response) throw new Error("Something went wrong while fetching API");
-      // const json = await response.json();
-      // if (!json) throw new Error("Something went wrong while fetching JSON");
-      // setData(json.prices);
-      // return json.prices;
-      setData(
-        CHAR_DATA.map((data) => {
-          return {
-            price: data[1],
-            timestamp: data[0],
-          };
-        })
-      );
-      return CHAR_DATA;
+      const response = await fetch(`/api/coin/${id}/?days=${days?.toString()}`);
+
+      if (!response) throw new Error("Something went wrong while fetching API");
+      const json = await response.json();
+      if (!json) throw new Error("Something went wrong while fetching JSON");
+
+      if (json.length === 0) return [];
+
+      const charDataArr = json.prices.map((data: number[]) => {
+        return {
+          price: data[1],
+          timestamp: data[0],
+        };
+      });
+      setData(charDataArr);
+      return charDataArr;
     } catch (error) {
-      setIsError(true);
       console.log(error);
+      toast.error(
+        "Too many request.  Please wait for a minute and then try again"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -48,5 +49,5 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
     fetchSingleCoin(id, days);
   }, [id, days]);
 
-  return { isError, isLoading, data };
+  return { isLoading, data };
 };

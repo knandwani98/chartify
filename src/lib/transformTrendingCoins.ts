@@ -12,7 +12,11 @@ export const transformTrendingCoins = (props: { data: ICoin }) => {
     current_price: data.current_price,
     image: data.image,
     market_cap: data.market_cap,
+    market_cap_rank: data.market_cap_rank,
     price_change_24h: data.price_change_24h,
     price_change_percentage_24h: data.price_change_percentage_24h,
+    total_volume: data.total_volume,
+    high_24h: data.high_24h,
+    low_24h: data.low_24h,
   };
 };

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const sansSerif = localFont({
-  src: './fonts/circularStd.ttf',
-  variable: '--font-sans-serif',
-})
+  src: "./fonts/circularStd.ttf",
+  variable: "--font-sans-serif",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sansSerif.className} antialiased bg-secondary`}>{children}</body>
+      <body className={`${sansSerif.className} antialiased`}>
+        {children}
+
+        <Toaster />
+      </body>
     </html>
   );
 }

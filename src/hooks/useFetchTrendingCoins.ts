@@ -11,25 +11,21 @@ export const useFetchTrendingCoins = () => {
   const fetchCoins = async () => {
     setIsLoading(true);
     try {
-      // const response = await fetch(TrendingCoins());
-      // if (!response) throw new Error("Something went wrong while fetching API");
-      // const json = await response.json();
-      // if (!json) throw new Error("Something went wrong while fetching JSON");
-      // setData(json);
-      // return json;
+      // PS: I had to remove fetch and add static Data because API has limited the request
       setData(TRENDING_COINS);
       return TRENDING_COINS;
     } catch (error) {
-      setIsError(true);
       console.log(error);
+      setIsError(true);
     } finally {
       setIsLoading(false);
+      return data;
     }
   };
 
   useEffect(() => {
     fetchCoins();
-  }, []);
+  }, [TRENDING_COINS]);
 
   return { isError, isLoading, data };
 };
