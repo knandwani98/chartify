@@ -21,7 +21,9 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
     try {
       const response = await fetch(`/api/coin/${id}/?days=${days?.toString()}`);
 
-      if (!response) throw new Error("Something went wrong while fetching API");
+      if (!response || !response.ok)
+        throw new Error("Something went wrong while fetching API");
+
       const json = await response.json();
       if (!json) throw new Error("Something went wrong while fetching JSON");
 

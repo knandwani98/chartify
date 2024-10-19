@@ -12,10 +12,14 @@ export async function GET(
   const { searchParams } = new URL(request.url);
   const days = searchParams.get("days");
 
-  if (!coinId) return;
+  if (!coinId)
+    return NextResponse.json({ error: "Too Many requests" }, { status: 500 });
 
   try {
     const response = await axios.get(HistoricalChart(coinId, Number(days)));
+
+    if (!response)
+      return NextResponse.json({ error: "Too Many requests" }, { status: 500 });
 
     return NextResponse.json(response.data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
