@@ -27,7 +27,7 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
 
       if (json.length === 0) return [];
 
-      const charDataArr = json.prices.map((data: number[]) => {
+      const charDataArr = json?.prices?.map((data: number[]) => {
         return {
           price: data[1],
           timestamp: data[0],

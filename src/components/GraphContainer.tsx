@@ -7,6 +7,7 @@ import { useFetchSingleCoin } from "@/hooks/useFetchSingleCoin";
 import { ICoin } from "@/types";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { DayTabs } from "./DayTabs";
+import { toast } from "sonner";
 
 export function GraphContainer(props: { activeCoin: ICoin }) {
   const { activeCoin } = props;
@@ -43,7 +44,12 @@ export function GraphContainer(props: { activeCoin: ICoin }) {
             </SheetContent>
           </Sheet>
 
-          <button className="flex justify-between items-center gap-2  text-gray-700 hover:text-primary">
+          <button
+            onClick={() => {
+              toast.warning("This feature is under construction");
+            }}
+            className="flex justify-between items-center gap-2  text-gray-700 hover:text-primary"
+          >
             <span>
               <CirclePlus className="size-5 hover:text-primary" />
             </span>
