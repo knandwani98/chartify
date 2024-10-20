@@ -1,3 +1,4 @@
+import { DUMMY_DATA } from "@/lib/constants";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -44,6 +45,7 @@ export const useFetchSingleCoin = (props: { id?: string; days?: number }) => {
       );
     } finally {
       setIsLoading(false);
+      return data || DUMMY_DATA;
     }
   };
 
